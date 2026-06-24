@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wheel of Fortune</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Rye&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="retro-header">
+            <h1>WHEEL OF LUNCH</h1>
+            <div class="lights-container top-lights"></div>
+        </header>
+
+        <main class="main-content">
+            <aside class="sidebar">
+                <div class="panel retro-panel">
+                    <h2>Menu Options</h2>
+                    <div class="input-area">
+                        <input type="text" id="optionInput" placeholder="Enter an option..." autocomplete="off">
+                        <button id="addBtn" class="retro-btn">ADD</button>
+                    </div>
+                    <ul id="optionsList" class="options-list"></ul>
+                </div>
+            </aside>
+
+            <section class="wheel-container">
+                <div class="wheel-wrapper">
+                    <div class="arrow"></div>
+                    <canvas id="wheelCanvas" width="820" height="820"></canvas>
+                </div>
+            </section>
+
+            <section class="lever-container">
+                <div class="machine-side">
+                    <div class="lever-slot">
+                        <div class="pull-text">PULL TO SPIN</div>
+                        <div class="lever-handle" id="leverHandle">
+                            <div class="lever-stick"></div>
+                            <div class="lever-knob"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="resultModal" class="modal">
+        <div class="modal-content retro-panel">
+            <h2>WE HAVE A WINNER!</h2>
+            <p id="winnerName" class="winner-name">Option</p>
+            <button id="closeModal" class="retro-btn">AWESOME!</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
