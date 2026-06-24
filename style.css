@@ -415,18 +415,11 @@ canvas {
         gap: 30px;
     }
 
-    .sidebar {
-        flex: none;
-        width: 100%;
-        max-width: 600px;
-        height: 400px;
-        margin: 0 auto;
-    }
-
     .wheel-container {
+        order: 1;
         flex: none;
         width: 100%;
-        padding: 20px 0;
+        padding: 10px 0;
     }
 
     .wheel-wrapper {
@@ -438,10 +431,21 @@ canvas {
     }
 
     .lever-container {
+        order: 2;
         flex: none;
         width: 100%;
         height: auto;
-        padding-bottom: 40px;
+        padding: 0;
+        margin-top: -10px; /* Bring lever closer to wheel */
+    }
+
+    .sidebar {
+        order: 3;
+        flex: none;
+        width: 100%;
+        max-width: 600px;
+        height: 400px;
+        margin: 20px auto 40px auto;
     }
 }
 

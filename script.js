@@ -166,20 +166,16 @@ closeModal.addEventListener('click', () => {
 // Lever Interaction
 let startY = 0;
 let isDragging = false;
+let startTime = 0;
 
 function onLeverStart(e) {
     if (isSpinning) return;
     isDragging = true;
     startY = e.clientY || (e.touches && e.touches[0].clientY);
+    startTime = Date.now();
     
     // Disable CSS transition during drag
     leverHandle.style.transition = 'none';
-    
-    // Prevent default touch behavior (scrolling) while pulling the lever
-    if (e.type === 'touchstart' && e.cancelable) {
-        // e.preventDefault() is generally not recommended on passive event listeners,
-        // but we'll try to prevent scrolling manually if needed
-    }
 }
 
 function onLeverMove(e) {
@@ -206,7 +202,29 @@ function onLeverEnd(e) {
         pulledDistance = parseFloat(match[1]);
     }
     
-    // Snap back
+    const timeElapsed = Date.now() - startTime;
+    
+    // Tap to spin: very short drag and quick release
+    if (pulledDistance < 15 && timeElapsed < 400) {
+        // Animate lever pulling down automatically
+        leverHandle.style.transition = 'transform 0.2s ease-in';
+        leverHandle.style.transform = `translateX(-50%) translateY(180px)`;
+        
+        setTimeout(() => {
+            // Snap back
+            leverHandle.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            leverHandle.style.transform = `translateX(-50%) translateY(0px)`;
+            
+            setTimeout(() => {
+                leverHandle.style.transition = '';
+            }, 400);
+            
+            spinWheel();
+        }, 200);
+        return;
+    }
+    
+    // Snap back for normal drag
     leverHandle.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
     leverHandle.style.transform = `translateX(-50%) translateY(0px)`;
     
@@ -226,8 +244,8 @@ document.addEventListener('mousemove', onLeverMove);
 document.addEventListener('mouseup', onLeverEnd);
 
 // Touch events for mobile
-leverHandle.addEventListener('touchstart', onLeverStart, {passive: false});
-document.addEventListener('touchmove', onLeverMove, {passive: false});
+leverHandle.addEventListener('touchstart', onLeverStart, {passive: true});
+document.addEventListener('touchmove', onLeverMove, {passive: true});
 document.addEventListener('touchend', onLeverEnd);
 
 // Handle window resize for canvas scaling (optional, but CSS flex handles visual scaling)
@@ -237,3 +255,4 @@ window.addEventListener('resize', drawWheel);
 // Init
 renderList();
 drawWheel();
+
