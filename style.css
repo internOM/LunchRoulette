@@ -231,6 +231,35 @@ canvas {
     transition: transform cubic-bezier(0.1, 0.9, 0.2, 1);
 }
 
+.center-spin-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #f4d03f 0%, #b7950b 100%);
+    color: #1a0f14;
+    border: 4px solid #7b241c;
+    font-family: 'Limelight', cursive;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 20;
+    box-shadow: inset -5px -5px 15px rgba(0,0,0,0.3), 0 5px 15px rgba(0,0,0,0.8);
+    transition: transform 0.1s, box-shadow 0.1s;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-spin-btn:active {
+    transform: translate(-50%, -50%) scale(0.95);
+    box-shadow: inset -5px -5px 15px rgba(0,0,0,0.5), 0 2px 5px rgba(0,0,0,0.8);
+}
+
 /* The Arrow */
 .arrow {
     position: absolute;
@@ -411,15 +440,18 @@ canvas {
     }
 
     .main-content {
-        flex-direction: column;
-        gap: 30px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 15px;
+        align-items: center;
     }
 
     .wheel-container {
-        order: 1;
-        flex: none;
+        grid-column: 1;
+        grid-row: 1;
         width: 100%;
-        padding: 10px 0;
+        padding: 0;
     }
 
     .wheel-wrapper {
@@ -431,17 +463,18 @@ canvas {
     }
 
     .lever-container {
-        order: 2;
-        flex: none;
-        width: 100%;
-        height: auto;
+        grid-column: 2;
+        grid-row: 1;
+        width: auto;
+        height: 100%;
         padding: 0;
-        margin-top: -10px; /* Bring lever closer to wheel */
+        display: flex;
+        align-items: center;
     }
 
     .sidebar {
-        order: 3;
-        flex: none;
+        grid-column: 1 / -1;
+        grid-row: 2;
         width: 100%;
         max-width: 600px;
         height: 400px;
@@ -475,7 +508,7 @@ canvas {
 
     .machine-side {
         transform: scale(0.8);
-        transform-origin: top center;
+        transform-origin: right center;
     }
     
     .winner-name {

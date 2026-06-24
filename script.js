@@ -7,6 +7,7 @@ const leverHandle = document.getElementById('leverHandle');
 const resultModal = document.getElementById('resultModal');
 const winnerName = document.getElementById('winnerName');
 const closeModal = document.getElementById('closeModal');
+const centerSpinBtn = document.getElementById('centerSpinBtn');
 
 let options = [
     "Blk 6",
@@ -99,15 +100,6 @@ function drawWheel() {
         ctx.fillText(option, radius - 40, 0);
         ctx.restore();
     });
-
-    // Draw center gold peg
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, 30, 0, Math.PI * 2);
-    ctx.fillStyle = "#f4d03f";
-    ctx.fill();
-    ctx.strokeStyle = "#b7950b";
-    ctx.lineWidth = 5;
-    ctx.stroke();
 }
 
 // Spin logic
@@ -251,6 +243,26 @@ document.addEventListener('touchend', onLeverEnd);
 // Handle window resize for canvas scaling (optional, but CSS flex handles visual scaling)
 // We just re-draw when resizing to ensure sharpness, though canvas scales automatically.
 window.addEventListener('resize', drawWheel);
+
+// Center Spin Button Interaction
+centerSpinBtn.addEventListener('click', () => {
+    if (isSpinning || options.length === 0) return;
+    
+    // Animate the lever down and up for visual effect
+    leverHandle.style.transition = 'transform 0.2s ease-in';
+    leverHandle.style.transform = `translateX(-50%) translateY(180px)`;
+    
+    setTimeout(() => {
+        leverHandle.style.transition = 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        leverHandle.style.transform = `translateX(-50%) translateY(0px)`;
+        
+        setTimeout(() => {
+            leverHandle.style.transition = '';
+        }, 400);
+    }, 200);
+
+    spinWheel();
+});
 
 // Init
 renderList();
